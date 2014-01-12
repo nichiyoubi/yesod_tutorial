@@ -1,0 +1,20 @@
+Default: &defaults
+  database: tutorial.sqlite3
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: tutorial_test.sqlite3
+  <<: *defaults
+
+Staging:
+  database: tutorial_staging.sqlite3
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: tutorial_production.sqlite3
+  poolsize: 100
+  <<: *defaults
