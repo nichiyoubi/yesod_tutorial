@@ -73,6 +73,8 @@ library
                  , monad-logger                  >= 0.3
                  , fast-logger                   >= 2.1
                  , wai-logger                    >= 2.0
+                 , time
+                 , old-time
 
 executable         tutorial
     if flag(library-only)
