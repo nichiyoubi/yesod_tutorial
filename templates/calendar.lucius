@@ -1,0 +1,19 @@
+h1 {
+color:#000000;
+}
+
+h2 {
+color:#303030;
+}
+
+#calendar {
+	display: table;
+}
+.week {
+	display: table-row;
+}
+.week>div {
+	display: table-cell;
+	width: 30px;
+}
+

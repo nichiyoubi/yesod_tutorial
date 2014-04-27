@@ -1,0 +1,23 @@
+<h1>#{show (ctYear (toUTCTime cal))}年
+    #{show (getMonth (toUTCTime cal))}月
+<h2>日 月 水 木 金 土
+<div id="calendar">
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 days))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 7  days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 14 days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 21 days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 28 days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 35 days)))
+            <div>#{day}
+
