@@ -8,21 +8,49 @@ import System.Time
 getCalendarR :: String -> Handler Html
 getCalendarR text = do
 	cal  <- liftIO $ getClockTime
-	cal' <- liftIO $ toCalendarTime cal
+	let days = getDays (get1stDayOfMonth cal)
 	defaultLayout $ do
 		setTitle "Calendar"
-		[whamlet|<h1>#{show (getMonth cal')}<h2>#{show (getDays cal')}|]
+		[whamlet|<h1>#{show (ctYear (toUTCTime cal))}年
+                             #{show (getMonth (toUTCTime cal))}月
+                   <h2>日 月 火 水 木 金 土
+                   $forall day <- (getCalendarString (take 7 days))
+                       <div>#{day}
+                   $forall day <- (getCalendarString (take 7 (drop 7  days)))
+                       <div>#{day}
+                   $forall day <- (getCalendarString (take 7 (drop 14 days)))
+                       <div>#{day}
+                   $forall day <- (getCalendarString (take 7 (drop 21 days)))
+                       <div>#{day}
+                   $forall day <- (getCalendarString (take 7 (drop 28 days)))
+                       <div>#{day}
+                   $forall day <- (getCalendarString (take 7 (drop 35 days)))
+                       <div>#{day}}|]
 
-getCalendar :: String
-getCalendar = "test"
+getCalendarString :: [Int] -> [String]
+getCalendarString [] = []
+getCalendarString [x]
+	| x == 0 = ["_"]
+	| x /= 0 = [show x]
+getCalendarString (x:xs)
+	| x == 0 = ["_"] ++ getCalendarString xs
+	| x /= 0 = [show x] ++ getCalendarString xs
+getCalendarString [_] = []
+getCalendarString (_:_) = []
+
+get1stDayOfMonth :: ClockTime -> CalendarTime
+get1stDayOfMonth cal = toUTCTime(addToClockTime
+		TimeDiff{tdYear=0, tdMonth=0, tdDay=1-(ctDay (toUTCTime cal)),
+		tdHour=0, tdMin=0, tdSec=0, tdPicosec=0} cal)
 
 getMonth :: CalendarTime -> Int
 getMonth cal = (fromEnum (ctMonth cal)) + 1
 
 getDays :: CalendarTime -> [Int]
-getDays cal = (replicate ((getWeek cal) - 1) 0) ++ [1..length]
-		where length = monthLength (isLeapYear (fromIntegral (ctYear cal))) (getMonth cal)
+getDays cal = (replicate ((getWeek cal) - 1) 0) ++ [1..len]
+		where len = monthLength (isLeapYear (fromIntegral (ctYear cal))) (getMonth cal)
 
 getWeek :: CalendarTime -> Int
 getWeek cal = (fromEnum (ctWDay cal)) + 1
 
+-- 
