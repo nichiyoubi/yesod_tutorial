@@ -9,23 +9,7 @@ getCalendarR :: String -> Handler Html
 getCalendarR text = do
 	cal  <- liftIO $ getClockTime
 	let days = getDays (get1stDayOfMonth cal)
-	defaultLayout $ do
-		setTitle "Calendar"
-		[whamlet|<h1>#{show (ctYear (toUTCTime cal))}年
-                             #{show (getMonth (toUTCTime cal))}月
-                   <h2>日 月 火 水 木 金 土
-                   $forall day <- (getCalendarString (take 7 days))
-                       <div>#{day}
-                   $forall day <- (getCalendarString (take 7 (drop 7  days)))
-                       <div>#{day}
-                   $forall day <- (getCalendarString (take 7 (drop 14 days)))
-                       <div>#{day}
-                   $forall day <- (getCalendarString (take 7 (drop 21 days)))
-                       <div>#{day}
-                   $forall day <- (getCalendarString (take 7 (drop 28 days)))
-                       <div>#{day}
-                   $forall day <- (getCalendarString (take 7 (drop 35 days)))
-                       <div>#{day}}|]
+	defaultLayout $(widgetFile "calendar")
 
 getCalendarString :: [Int] -> [String]
 getCalendarString [] = []
