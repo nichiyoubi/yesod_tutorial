@@ -1,7 +1,19 @@
-<h1>#{show (ctYear (toUTCTime cal))}年
-    #{show (getMonth (toUTCTime cal))}月
-<h2>日 月 水 木 金 土
+<div id="month">
+    <div class="prev">
+         <a href=#{(getMonth cal) - 1}>prev</a>
+    <div class="year">#{show (ctYear cal)}年 #{show (getMonth cal)}月
+    <div class="next">
+         <a href=#{(getMonth cal) + 1}>next</a>
+
 <div id="calendar">
+    <div class="wday">
+        <div>日
+        <div>月
+        <div>火
+        <div>水
+        <div>木
+        <div>金
+        <div>土
     <div class="week">
         $forall day <- (getCalendarString (take 7 days))
             <div>#{day}

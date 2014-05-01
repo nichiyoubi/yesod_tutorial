@@ -7,9 +7,18 @@ import System.Time
 
 getCalendarR :: String -> Handler Html
 getCalendarR text = do
-	cal  <- liftIO $ getClockTime
-	let days = getDays (get1stDayOfMonth cal)
+	let mon = read text::Int
+	cal' <- liftIO $ getClockTime
+	let cal = get1stDayOfSpecifiedMonth mon 2014 cal'
+	let days = getDays cal
 	defaultLayout $(widgetFile "calendar")
+
+get1stDayOfSpecifiedMonth :: Int -> Int -> ClockTime -> CalendarTime
+get1stDayOfSpecifiedMonth mon year cal = toUTCTime(addToClockTime
+		TimeDiff{tdYear=year-(ctYear (toUTCTime cal)),
+			 tdMonth=mon-(getMonth (toUTCTime cal)),
+			 tdDay=1-(ctDay (toUTCTime cal)),
+			 tdHour=0, tdMin=0, tdSec=0, tdPicosec=0} cal)
 
 getCalendarString :: [Int] -> [String]
 getCalendarString [] = []
@@ -37,4 +46,3 @@ getDays cal = (replicate ((getWeek cal) - 1) 0) ++ [1..len]
 getWeek :: CalendarTime -> Int
 getWeek cal = (fromEnum (ctWDay cal)) + 1
 
--- 
