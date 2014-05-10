@@ -1,10 +1,25 @@
-<div id="month">
-    <div class="prev">
-         <a href=#{(getMonth cal) - 1}>prev</a>
-    <div class="year">#{show (ctYear cal)}年 #{show (getMonth cal)}月
-    <div class="next">
-         <a href=#{(getMonth cal) + 1}>next</a>
-
+$if isJan
+    <div id="month">
+        <div class="prev">
+            <a href=../#{prevYear}/12>prev
+        <div class="year">#{year}年 #{mon}月
+        <div class="next">
+             <a href=../#{year}/#{nextMon}>next
+$elseif isDec
+    <div id="month">
+        <div class="prev">
+            <a href=../#{year}/#{prevMon}>prev
+        <div class="year">#{year}年 #{mon}月
+        <div class="next">
+            <a href=../#{nextYear}/1>next
+$else
+    <div id="month">
+        <div class="prev">
+             <a href=../#{year}/#{prevMon}>prev
+        <div class="year">#{year}年 #{mon}月
+        <div class="next">
+             <a href=../#{year}/#{nextMon}>next
+    
 <div id="calendar">
     <div class="wday">
         <div>日

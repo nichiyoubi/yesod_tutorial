@@ -5,11 +5,16 @@ import Data.Time
 import Data.Time.Calendar.MonthDay
 import System.Time
 
-getCalendarR :: String -> Handler Html
-getCalendarR text = do
-	let mon = read text::Int
+getCalendarR :: Int -> Int -> Handler Html
+getCalendarR year mon = do
 	cal' <- liftIO $ getClockTime
-	let cal = get1stDayOfSpecifiedMonth mon 2014 cal'
+	let cal = get1stDayOfSpecifiedMonth mon year cal'
+	let isJan = (mon == 1)::Bool
+	let isDec = (mon == 12)::Bool
+	let nextYear = year + 1
+	let prevYear = year - 1
+	let nextMon = mon + 1
+	let prevMon = mon - 1
 	let days = getDays cal
 	defaultLayout $(widgetFile "calendar")
 
