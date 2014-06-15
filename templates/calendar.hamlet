@@ -48,9 +48,10 @@ $else
         $forall day <- (getCalendarString (take 7 (drop 35 days)))
             <div>#{day}
 
-<h1> Car
+<h1> Schedule
   <form method=post enctype=#{enctype}>
-    ^{carWidget}
+    ^{startWidget}
+    ^{endWidget}
     <div>
-      <input type=submit value="Post New Car">
+      <input type=submit value="Set">
 

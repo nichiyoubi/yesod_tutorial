@@ -19,7 +19,8 @@ carAForm = renderDivs $ Car
 
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
-	(carWidget, enctype) <- generateFormPost carAForm
+	(startWidget, enctype) <- generateFormPost carAForm
+	(endWidget, enctype) <- generateFormPost carAForm
 	cal' <- liftIO $ getClockTime
 	let cal = get1stDayOfSpecifiedMonth mon year cal'
 	let isJan = (mon == 1)::Bool
