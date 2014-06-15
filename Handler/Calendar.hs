@@ -5,8 +5,21 @@ import Data.Time
 import Data.Time.Calendar.MonthDay
 import System.Time
 
+data Car = Car
+	{ carModel :: Text,
+	  carYear :: Int
+	}
+	deriving Show
+
+carAForm :: Html -> MForm Handler (FormResult Car, Widget)
+carAForm = renderDivs $ Car
+	<$> areq textField "Model" Nothing
+	<*> areq intField "Year" Nothing
+
+
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
+	(carWidget, enctype) <- generateFormPost carAForm
 	cal' <- liftIO $ getClockTime
 	let cal = get1stDayOfSpecifiedMonth mon year cal'
 	let isJan = (mon == 1)::Bool
