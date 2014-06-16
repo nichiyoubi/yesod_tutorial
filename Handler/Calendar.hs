@@ -2,25 +2,25 @@ module Handler.Calendar where
 
 import Import
 import Data.Time
+import qualified Data.Time.Calendar as C
 import Data.Time.Calendar.MonthDay
 import System.Time
 
-data Car = Car
-	{ carModel :: Text,
-	  carYear :: Int
+data Schedule = Schedule
+	{ start :: C.Day,
+	  end :: C.Day
 	}
 	deriving Show
 
-carAForm :: Html -> MForm Handler (FormResult Car, Widget)
-carAForm = renderDivs $ Car
-	<$> areq textField "Model" Nothing
-	<*> areq intField "Year" Nothing
+scheduleAForm :: Html -> MForm Handler (FormResult Schedule, Widget)
+scheduleAForm = renderDivs $ Schedule
+	<$> areq dayField "Start Day" Nothing
+	<*> areq dayField "End Day" Nothing
 
 
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
-	(startWidget, enctype) <- generateFormPost carAForm
-	(endWidget, enctype) <- generateFormPost carAForm
+	(scheduleWidget, enctype) <- generateFormPost scheduleAForm
 	cal' <- liftIO $ getClockTime
 	let cal = get1stDayOfSpecifiedMonth mon year cal'
 	let isJan = (mon == 1)::Bool
