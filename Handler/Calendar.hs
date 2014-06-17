@@ -32,6 +32,17 @@ getCalendarR year mon = do
 	let days = getDays cal
 	defaultLayout $(widgetFile "calendar")
 
+postCalendarR :: Int -> Int -> Handler Html
+postCalendarR year mon = do
+	((result, widget), enctype) <- runFormPost scheduleAForm
+	case result of
+		FormSuccess schedule -> defaultLayout [whamlet|<p>#{show schedule}|]
+		_ -> defaultLayout
+			[whamlet|
+<p>Invalid input, let's try again.
+|]
+
+
 get1stDayOfSpecifiedMonth :: Int -> Int -> ClockTime -> CalendarTime
 get1stDayOfSpecifiedMonth mon year cal = toUTCTime(addToClockTime
 		TimeDiff{tdYear=year-(ctYear (toUTCTime cal)),
