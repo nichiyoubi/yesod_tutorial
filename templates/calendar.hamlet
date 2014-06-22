@@ -48,6 +48,7 @@ $else
         $forall day <- (getCalendarString (take 7 (drop 35 days)))
             <div>#{day}
 
+<br>
 <div id="schedule"> Schedule
   <form method=post enctype=#{enctype}>
     ^{scheduleWidget}

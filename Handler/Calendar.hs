@@ -8,7 +8,8 @@ import System.Time
 
 data Schedule = Schedule
 	{ start :: C.Day,
-	  end :: C.Day
+	  end :: C.Day,
+	  opt :: Bool
 	}
 	deriving Show
 
@@ -16,7 +17,12 @@ scheduleAForm :: Html -> MForm Handler (FormResult Schedule, Widget)
 scheduleAForm = renderDivs $ Schedule
 	<$> areq dayField "Start Day" Nothing
 	<*> areq dayField "End Day" Nothing
+	<*> areq checkBoxField "test" Nothing
 
+data Candidates = Candidates 
+	{ candidates :: [C.Day]
+	}
+	deriving Show
 
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
@@ -36,11 +42,15 @@ postCalendarR :: Int -> Int -> Handler Html
 postCalendarR year mon = do
 	((result, widget), enctype) <- runFormPost scheduleAForm
 	case result of
-		FormSuccess schedule -> defaultLayout [whamlet|<p>#{show schedule}|]
+		FormSuccess schedule -> defaultLayout $(widgetFile "schedule")
+			where diff = diffDays (end schedule) (start schedule)
 		_ -> defaultLayout
 			[whamlet|
 <p>Invalid input, let's try again.
 |]
+
+-- getCandidateDays :: C.Day -> C.Day -> Candidates
+-- getCandidateDays end start =
 
 
 get1stDayOfSpecifiedMonth :: Int -> Int -> ClockTime -> CalendarTime
