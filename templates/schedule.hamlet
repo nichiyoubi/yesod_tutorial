@@ -1,0 +1,13 @@
+<div id="days"> Schedule
+<hr>
+
+  $forall day <- days
+    <input type="checkbox" name="day" value="#{show day}">#{show day}
+    <br>
+
+<hr>
+
+<div id="calendar">
+  <div class="back">
+     <a href=../#{year}/#{mon}>back
+
