@@ -24,9 +24,9 @@ data Candidates = Candidates
 	}
 	deriving Show
 
-candidateAForm :: Html -> MForm Handler (FormResult Candidates, Widget)
-candidateAForm = renderDivs $ Candidates
-	<$> areq checkBoxField 
+-- candidateAForm :: Html -> MForm Handler (FormResult Candidates, Widget)
+-- candidateAForm = renderDivs $ Candidates
+--	<$> areq checkBoxField "***" Nothing
 
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
