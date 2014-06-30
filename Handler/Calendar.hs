@@ -7,8 +7,8 @@ import Data.Time.Calendar.MonthDay
 import System.Time
 
 data Schedule = Schedule
-	{ start :: C.Day,
-	  end :: C.Day,
+	{ startDay :: C.Day,
+	  endDay :: C.Day,
 	  opt :: Bool
 	}
 	deriving Show
@@ -23,6 +23,10 @@ data Candidates = Candidates
 	{ candidates :: [C.Day]
 	}
 	deriving Show
+
+candidateAForm :: Html -> MForm Handler (FormResult Candidates, Widget)
+candidateAForm = renderDivs $ Candidates
+	<$> areq checkBoxField 
 
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
@@ -43,14 +47,21 @@ postCalendarR year mon = do
 	((result, widget), enctype) <- runFormPost scheduleAForm
 	case result of
 		FormSuccess schedule -> defaultLayout $(widgetFile "schedule")
-			where diff = diffDays (end schedule) (start schedule)
+			where diff = diffDays (endDay schedule) (startDay schedule)
+			      days = getCandidateDays (endDay schedule) (startDay schedule)
 		_ -> defaultLayout
 			[whamlet|
 <p>Invalid input, let's try again.
 |]
 
--- getCandidateDays :: C.Day -> C.Day -> Candidates
--- getCandidateDays end start =
+getCandidateDays :: C.Day -> C.Day -> [C.Day] 
+getCandidateDays end start = getCandidateDays' (diffDays end start) start
+
+getCandidateDays' :: Integer -> C.Day -> [C.Day]
+getCandidateDays' num day
+	| num == 0 = [day]
+	| num > 0  = [day] ++ getCandidateDays' (num - 1) (addDays 1 day)
+	| otherwise = []
 
 
 get1stDayOfSpecifiedMonth :: Int -> Int -> ClockTime -> CalendarTime
