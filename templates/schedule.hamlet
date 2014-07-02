@@ -6,7 +6,14 @@
     <br>
 
 <hr>
+<br>
+<div id="schedule"> Schedule
+  <form method=post enctype=#{enctype'}>
+    ^{scheduleWidget}
+    <div>
+      <input type=submit value="submit">
 
+<hr>
 <div id="calendar">
   <div class="back">
      <a href=../#{year}/#{mon}>back

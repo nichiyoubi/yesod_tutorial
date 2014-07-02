@@ -1,6 +1,7 @@
 module Handler.Calendar where
 
 import Import
+import qualified Data.Text as T
 import Data.Time
 import qualified Data.Time.Calendar as C
 import Data.Time.Calendar.MonthDay
@@ -20,13 +21,13 @@ scheduleAForm = renderDivs $ Schedule
 	<*> areq checkBoxField "test" Nothing
 
 data Candidates = Candidates 
-	{ candidates :: [C.Day]
+	{ multiSelectVal :: [C.Day]
 	}
 	deriving Show
 
--- candidateAForm :: Html -> MForm Handler (FormResult Candidates, Widget)
--- candidateAForm = renderDivs $ Candidates
---	<$> areq checkBoxField "***" Nothing
+candidateAForm :: [(Text, C.Day)] -> Html -> MForm Handler (FormResult Candidates, Widget)
+candidateAForm days = renderDivs $ Candidates
+	<$> areq (multiSelectFieldList days) "***" Nothing
 
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
@@ -46,21 +47,26 @@ postCalendarR :: Int -> Int -> Handler Html
 postCalendarR year mon = do
 	((result, widget), enctype) <- runFormPost scheduleAForm
 	case result of
-		FormSuccess schedule -> defaultLayout $(widgetFile "schedule")
-			where diff = diffDays (endDay schedule) (startDay schedule)
-			      days = getCandidateDays (endDay schedule) (startDay schedule)
+		FormSuccess schedule -> do
+			(scheduleWidget, enctype') <- generateFormPost (candidateAForm candidates)
+			defaultLayout $(widgetFile "schedule")
+			where end = endDay schedule
+			      start = startDay schedule
+			      diff = diffDays end start
+			      days = getCandidateDays end start
+			      candidates = getCandidateDays end start
 		_ -> defaultLayout
 			[whamlet|
 <p>Invalid input, let's try again.
 |]
 
-getCandidateDays :: C.Day -> C.Day -> [C.Day] 
+getCandidateDays :: C.Day -> C.Day -> [(T.Text, C.Day)] 
 getCandidateDays end start = getCandidateDays' (diffDays end start) start
 
-getCandidateDays' :: Integer -> C.Day -> [C.Day]
+getCandidateDays' :: Integer -> C.Day -> [(T.Text, C.Day)]
 getCandidateDays' num day
-	| num == 0 = [day]
-	| num > 0  = [day] ++ getCandidateDays' (num - 1) (addDays 1 day)
+	| num == 0 = [(T.pack (show day), day)]
+	| num > 0  = [(T.pack (show day), day)] ++ getCandidateDays' (num - 1) (addDays 1 day)
 	| otherwise = []
 
 
