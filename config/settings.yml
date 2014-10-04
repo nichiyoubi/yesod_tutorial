@@ -16,5 +16,5 @@ Staging:
 
 Production:
   #approot: "http://www.example.com"
-  approot: "http://ytutorial.herokuapp.com/"
+  approot: "http://ytutorial.herokuapp.com"
   <<: *defaults
