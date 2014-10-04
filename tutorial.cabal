@@ -23,6 +23,7 @@ library
                      Handler.Echo
                      Handler.Mirror
                      Handler.Calendar
+                     Handler.Candidates
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
