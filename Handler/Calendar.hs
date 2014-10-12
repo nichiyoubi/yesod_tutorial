@@ -9,8 +9,7 @@ import System.Time
 
 data Schedule = Schedule
 	{ startDay :: C.Day,
-	  endDay :: C.Day,
-	  opt :: Bool
+	  endDay :: C.Day
 	}
 	deriving Show
 
@@ -18,16 +17,15 @@ scheduleAForm :: Html -> MForm Handler (FormResult Schedule, Widget)
 scheduleAForm = renderDivs $ Schedule
 	<$> areq dayField "Start Day" Nothing
 	<*> areq dayField "End Day" Nothing
-	<*> areq checkBoxField "test" Nothing
 
 data Candidates = Candidates 
-	{ multiSelectVal :: [C.Day]
+	{ cdays :: [C.Day]
 	}
 	deriving Show
 
 candidateAForm :: [(Text, C.Day)] -> Html -> MForm Handler (FormResult Candidates, Widget)
 candidateAForm days = renderDivs $ Candidates
-	<$> areq (multiSelectFieldList days) "***" Nothing
+	<$> areq (checkboxesFieldList days) "***" Nothing
 
 getCalendarR :: Int -> Int -> Handler Html
 getCalendarR year mon = do
@@ -48,25 +46,26 @@ postCalendarR year mon = do
 	((result, widget), enctype) <- runFormPost scheduleAForm
 	case result of
 		FormSuccess schedule -> do
-			(scheduleWidget, enctype') <- generateFormPost (candidateAForm candidates)
+			(scheduleWidget, enctype') <- generateFormPost (candidateAForm days)
 			defaultLayout $(widgetFile "schedule")
 			where end = endDay schedule
 			      start = startDay schedule
 			      diff = diffDays end start
 			      days = getCandidateDays end start
-			      candidates = getCandidateDays end start
 		_ -> defaultLayout
 			[whamlet|
 <p>Invalid input, let's try again.
 |]
 
 getCandidateDays :: C.Day -> C.Day -> [(T.Text, C.Day)] 
-getCandidateDays end start = getCandidateDays' (diffDays end start) start
+getCandidateDays end start = getCandidateDays' diff diff start
+		     	     where diff = diffDays end start
 
-getCandidateDays' :: Integer -> C.Day -> [(T.Text, C.Day)]
-getCandidateDays' num day
-	| num == 0 = [(T.pack (show day), day)]
-	| num > 0  = [(T.pack (show day), day)] ++ getCandidateDays' (num - 1) (addDays 1 day)
+getCandidateDays' :: Integer -> Integer -> C.Day -> [(T.Text, C.Day)]
+getCandidateDays' max num day
+	| num == 0 = [(T.pack ("day" ++ (show (max - num))), day)]
+	| num > 0  = [(T.pack ("day" ++ (show (max - num))), day)]
+	      	     	      ++ getCandidateDays' max (num - 1) (addDays 1 day)
 	| otherwise = []
 
 

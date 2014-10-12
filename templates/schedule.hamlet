@@ -1,17 +1,13 @@
-<div id="days"> Schedule
+<div id="days"> 候補日
 <hr>
-
-  $forall day <- days
-    <input type="checkbox" name="day" value="#{show day}">#{show day}
-    <br>
-
-<hr>
-<br>
-<div id="schedule"> Schedule
+<div id="schedule">
   <form action=@{CandidatesR} method=post enctype=#{enctype'}>
-    ^{scheduleWidget}
-    <div>
-      <input type=submit value="submit">
+    $forall day <- days
+      <input type="checkbox" name="#{fst day}" value="#{show (snd day)}">#{show (snd day)}
+      <br>
+    <br>
+    <input type=submit value="submit">
+
 
 <hr>
 <div id="calendar">
