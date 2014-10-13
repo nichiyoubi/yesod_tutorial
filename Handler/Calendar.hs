@@ -65,7 +65,7 @@ getCandidateDays' :: Integer -> Integer -> C.Day -> [(T.Text, C.Day)]
 getCandidateDays' maxnum num day
 	| num == 0 = [(T.pack ("day" ++ (show (maxnum - num))), day)]
 	| num > 0  = [(T.pack ("day" ++ (show (maxnum - num))), day)]
-      	     	      ++ getCandidateDays' maxnum (num - 1) (addDays 1 day)
+	      	     	      ++ getCandidateDays' maxnum (num - 1) (addDays 1 day)
 	| otherwise = []
 
 

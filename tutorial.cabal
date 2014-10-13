@@ -23,6 +23,7 @@ library
                      Handler.Calendar
                      Handler.Candidates
                      Handler.Scheduling
+                     Handler.Setting
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

@@ -1,5 +1,5 @@
 <div id="title">日程調整
 <div id="setting">
-  <form action=@{CandidatesR} method=post enctype=#{enctype}>
+  <form action=@{SettingR year mon} method=post enctype=#{enctype}>
     ^{widget}
     <button>Submit

@@ -1,6 +1,7 @@
 module Handler.Scheduling where
 
 import Import
+import System.Time
 
 data Scheduling = Scheduling
         { title :: Text,
@@ -16,4 +17,7 @@ schedulingForm = renderDivs $ Scheduling
 getSchedulingR :: Handler Html
 getSchedulingR = do
 	(widget, enctype) <- generateFormPost schedulingForm
+	cal <- liftIO $ getClockTime
+	let year = ctYear (toUTCTime cal)
+	let mon = (fromEnum (ctMonth (toUTCTime cal))) + 1
 	defaultLayout $(widgetFile "scheduling")
