@@ -1,0 +1,56 @@
+$if isJan
+    <div id="month">
+        <div class="prev">
+            <a href=../#{prevYear}/12>prev
+        <div class="year">#{year}年 #{mon}月
+        <div class="next">
+             <a href=../#{year}/#{nextMon}>next
+$elseif isDec
+    <div id="month">
+        <div class="prev">
+            <a href=../#{year}/#{prevMon}>prev
+        <div class="year">#{year}年 #{mon}月
+        <div class="next">
+            <a href=../#{nextYear}/1>next
+$else
+    <div id="month">
+        <div class="prev">
+             <a href=../#{year}/#{prevMon}>prev
+        <div class="year">#{year}年 #{mon}月
+        <div class="next">
+             <a href=../#{year}/#{nextMon}>next
+    
+<div id="calendar">
+    <div class="wday">
+        <div>日
+        <div>月
+        <div>火
+        <div>水
+        <div>木
+        <div>金
+        <div>土
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 days))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 7  days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 14 days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 21 days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 28 days)))
+            <div>#{day}
+    <div class="week">
+        $forall day <- (getCalendarString (take 7 (drop 35 days)))
+            <div>#{day}
+
+<br>
+<div id="schedule"> Schedule
+  <form method=post enctype=#{enctype}>
+    ^{settingWidget}
+    <div>
+      <input type=submit value="submit">
