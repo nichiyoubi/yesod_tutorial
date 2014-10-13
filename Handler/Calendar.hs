@@ -62,10 +62,10 @@ getCandidateDays end start = getCandidateDays' diff diff start
 		     	     where diff = diffDays end start
 
 getCandidateDays' :: Integer -> Integer -> C.Day -> [(T.Text, C.Day)]
-getCandidateDays' max num day
-	| num == 0 = [(T.pack ("day" ++ (show (max - num))), day)]
-	| num > 0  = [(T.pack ("day" ++ (show (max - num))), day)]
-	      	     	      ++ getCandidateDays' max (num - 1) (addDays 1 day)
+getCandidateDays' maxnum num day
+	| num == 0 = [(T.pack ("day" ++ (show (maxnum - num))), day)]
+	| num > 0  = [(T.pack ("day" ++ (show (maxnum - num))), day)]
+      	     	      ++ getCandidateDays' maxnum (num - 1) (addDays 1 day)
 	| otherwise = []
 
 

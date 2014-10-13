@@ -20,10 +20,9 @@ library
                      Settings.StaticFiles
                      Settings.Development
                      Handler.Home
-                     Handler.Echo
-                     Handler.Mirror
                      Handler.Calendar
                      Handler.Candidates
+                     Handler.Scheduling
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
