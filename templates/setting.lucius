@@ -6,6 +6,13 @@ h2 {
 color:#303030;
 }
 
+#title {
+       color:#303030;
+}
+.title {
+       font-size: x-large;
+}
+
 #month {
 	display: table;
 }

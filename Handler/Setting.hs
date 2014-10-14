@@ -21,17 +21,21 @@ settingForm = renderDivs $ Setting
 getSettingR :: Int -> Int -> Handler Html
 getSettingR year mon = do
 	(settingWidget, enctype) <- generateFormPost settingForm
-	let name = lookupSession "title"
-	cal' <- liftIO $ getClockTime
-	let cal = get1stDayOfSpecifiedMonth mon year cal'
-	let isJan = (mon == 1)::Bool
-	let isDec = (mon == 12)::Bool
-	let nextYear = year + 1
-	let prevYear = year - 1
-	let nextMon = mon + 1
-	let prevMon = mon - 1
-	let days = getDays cal
-	defaultLayout $(widgetFile "setting")
+	mname <- lookupSession "title"
+	case mname of
+	        Nothing -> do
+		        redirect SchedulingR
+		Just name -> do
+			cal' <- liftIO $ getClockTime
+			let cal = get1stDayOfSpecifiedMonth mon year cal'
+			let isJan = (mon == 1)::Bool
+			let isDec = (mon == 12)::Bool
+			let nextYear = year + 1
+			let prevYear = year - 1
+			let nextMon = mon + 1
+			let prevMon = mon - 1
+			let days = getDays cal
+			defaultLayout $(widgetFile "setting")
 
 postSettingR :: Int -> Int -> Handler Html
 postSettingR year mon = do

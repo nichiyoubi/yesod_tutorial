@@ -1,3 +1,6 @@
+<div id="title">
+    <div class="title">#{name}
+<br>
 $if isJan
     <div id="month">
         <div class="prev">
@@ -54,3 +57,4 @@ $else
     ^{settingWidget}
     <div>
       <input type=submit value="submit">
+  <a href=@{SchedulingR}>back
