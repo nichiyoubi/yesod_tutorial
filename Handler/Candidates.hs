@@ -17,11 +17,10 @@ postCandidatesR = do
 	textVal10 <- runInputPost $ iopt textField "day10"
 	defaultLayout $ do
 		[whamlet|
-<p>Invalid input, let's try again.
 #{show textVal1} #{show textVal2}
 <hr>
 <div id="calendar">
   <div class="back">
-    <a href=../cal/2014/03>back
+    <a href=@{SchedulingR}>back
 |]
 
