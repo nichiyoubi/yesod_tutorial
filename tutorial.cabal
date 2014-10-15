@@ -20,10 +20,10 @@ library
                      Settings.StaticFiles
                      Settings.Development
                      Handler.Home
-                     Handler.Calendar
                      Handler.Candidates
                      Handler.Scheduling
                      Handler.Setting
+                     Handler.SettingDays
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

@@ -7,6 +7,6 @@
 / HomeR GET POST
 /scheduling SchedulingR GET
 /scheduling/setting/#Int/#Int SettingR GET POST
+/scheduling/setting/days SettingDaysR POST
+/scheduling/candidates CandidatesR POST
 
-/cal/#Int/#Int CalendarR GET POST
-/candidates CandidatesR POST

@@ -44,7 +44,7 @@ postSettingR year mon = do
 	        FormSuccess schedule -> do
 			let name = title schedule
 			setSession "title" name
-			(settingWidget, enctype) <- generateFormPost settingForm
+			(settingWidget, enctype') <- generateFormPost settingForm
 			cal' <- liftIO $ getClockTime
 			let cal = get1stDayOfSpecifiedMonth mon year cal'
 			let isJan = (mon == 1)::Bool
