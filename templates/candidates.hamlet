@@ -1,0 +1,31 @@
+<div id="title">
+    <div class="title">#{name}
+<hr>
+<div id="candidates">
+    <div class="days">
+$maybe day0 <- mday0
+        #{show day0} <br>
+$maybe day1 <- mday1
+        #{show day1} <br>
+$maybe day2 <- mday2
+        #{show day2} <br>
+$maybe day3 <- mday3
+        #{show day3} <br>
+$maybe day4 <- mday4
+        #{show day4} <br>
+$maybe day5 <- mday5
+        #{show day5} <br>
+$maybe day6 <- mday6
+        #{show day6} <br>
+$maybe day7 <- mday7
+        #{show day7} <br>
+$maybe day8 <- mday8
+        #{show day8} <br>
+$maybe day9 <- mday9
+        #{show day9} <br>
+$maybe day10 <- mday10
+        #{show day10} <br>
+<hr>
+<div id="back">
+    <div class="back">
+        <a href=@{SchedulingR}>back
