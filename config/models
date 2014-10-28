@@ -10,6 +10,6 @@ User
 --    UniqueEmail email
 CandidateDays
     title Text
-    days  [Day]
+    days  Text
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

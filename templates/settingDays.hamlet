@@ -1,3 +1,6 @@
+<div id="title">
+    <div class="title">#{name}
+<br>
 <div id="days"> 候補日
 <hr>
 <div id="schedule">

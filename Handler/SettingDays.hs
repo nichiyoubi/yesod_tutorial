@@ -19,12 +19,17 @@ postSettingDaysR = do
         ((result, widget), enctype) <- runFormPost settingForm
 	case result of
 	        FormSuccess schedule -> do
-		        (settingWidget, enctype') <- generateFormPost (daysForm days)
-			defaultLayout $(widgetFile "settingDays")
-			where end   = endDay schedule
-			      start = startDay schedule
-			      diff  = diffDays end start
-			      days  = getCandidateDays end start
+			mname <- lookupSession "title"
+			case mname of
+			        Nothing -> do
+				        redirect SchedulingR
+				Just name -> do
+		        	        (settingWidget, enctype') <- generateFormPost (daysForm days)
+					defaultLayout $(widgetFile "settingDays")
+					where end   = endDay schedule
+			      		      start = startDay schedule
+	      		      		      diff  = diffDays end start
+	      		      		      days  = getCandidateDays end start
 		_ -> defaultLayout
 		        [whamlet|
 <p>Invalid input, let's try again.
