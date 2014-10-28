@@ -10,3 +10,4 @@
 /scheduling/setting/days SettingDaysR POST
 /scheduling/candidates CandidatesR POST
 
+/scheduling/candidates/#Int RegisterR GET POST
