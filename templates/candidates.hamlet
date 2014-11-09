@@ -1,6 +1,7 @@
 <div id="title">
     <div class="title">#{name}
 <hr>
+
 <div id="candidates">
     <div class="days">
 $maybe day0 <- mday0
@@ -28,4 +29,5 @@ $maybe day10 <- mday10
 <hr>
 <div id="back">
     <div class="back">
+        <a href=@{RegisterR listId}>#{name} <br>
         <a href=@{SchedulingR}>back

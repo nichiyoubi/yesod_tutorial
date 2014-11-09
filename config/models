@@ -8,8 +8,13 @@ User
 --    user UserId Maybe
 --    verkey Text Maybe
 --    UniqueEmail email
+CandidateList
+    title Text
+    comment Text Maybe
 CandidateDays
+    listId CandidateListId
     title Text
     days  Text
+    deriving Show
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
