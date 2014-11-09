@@ -12,7 +12,6 @@ postCandidatesR = do
 		Just name -> do
 		     	comment <- lookupSession "comment"
 		     	listId <- runDB $ insert $ CandidateList name comment
---		        titles <- runDB $ selectList [] [Asc CandidateDaysTitle]
 
 			mday0 <- runInputPost $ iopt textField "day0"
 			case mday0 of Just day0 -> (runDB $ insert $ CandidateDays listId name day0)
