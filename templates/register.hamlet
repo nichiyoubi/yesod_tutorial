@@ -1,0 +1,17 @@
+<div id="title">
+    <div class="title">
+<hr>
+
+<div id="register">
+    <div class="days">
+$if null days
+    <p> There is no candidate days.
+$else
+    <p> There are some candidate days.
+    $forall Entity listId day <- days
+        #{show day}
+                
+<hr>
+<div id="back">
+    <div class="back">
+        <a href=@{SchedulingR}>back
